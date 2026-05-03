@@ -1,0 +1,29 @@
+// Pin Definitions
+const int IR_SENSOR_PIN = 2; // Digital pin for IR Sensor
+const int RELAY_PIN = 3;    // Digital pin for Relay Module
+
+void setup() {
+  pinMode(IR_SENSOR_PIN, INPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+  
+  // Initialize relay as OFF (Most relays are active LOW)
+  digitalWrite(RELAY_PIN, HIGH); 
+  
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read the IR sensor state
+  // Typically: LOW = Object Detected, HIGH = No Object
+  int sensorState = digitalRead(IR_SENSOR_PIN);
+
+  if (sensorState == LOW) {
+    digitalWrite(RELAY_PIN, LOW);  // Turn relay ON
+    Serial.println("Object Detected: Relay ON");
+  } else {
+    digitalWrite(RELAY_PIN, HIGH); // Turn relay OFF
+    Serial.println("No Object: Relay OFF");
+  }
+
+  delay(100); // Small delay for stability
+}
